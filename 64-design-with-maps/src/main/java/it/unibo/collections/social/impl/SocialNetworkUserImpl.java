@@ -6,14 +6,14 @@ package it.unibo.collections.social.impl;
 import it.unibo.collections.social.api.SocialNetworkUser;
 import it.unibo.collections.social.api.User;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+//import java.util.Set;
 
 /**
  * 
@@ -27,6 +27,8 @@ import java.util.Set;
  */
 public final class SocialNetworkUserImpl<U extends User> extends UserImpl implements SocialNetworkUser<U> {
 
+
+    Map<String, U> group = new HashMap<>();
     /*
      *
      * [FIELDS]
@@ -62,12 +64,14 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *            application
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
-        super(null, null, null, 0);
+        super(name, surname, user, userAge);
+        this.group = null;
     }
 
-    /*
-     * 2) Define a further constructor where the age defaults to -1
-     */
+    public SocialNetworkUserImpl(final String name, final String surname, final String user) {
+        super(name, surname, user, -1);
+        this.group = null;
+    }
 
     /*
      * [METHODS]
@@ -76,7 +80,12 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+        if (group.containsValue(user)) {
+            return false;
+        } else {
+            group.put(circle, user);
+            return true;
+        }
     }
 
     /**
@@ -86,7 +95,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+        return group.values();
     }
 
     @Override
