@@ -3,14 +3,17 @@ package it.unibo.generics.graph;
 import it.unibo.generics.graph.api.Graph;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  *
  */
-public final class UseGraph implements Graph{
+public final class UseGraph implements Graph<String>{
 
     private UseGraph() {
     }
@@ -27,6 +30,8 @@ public final class UseGraph implements Graph{
     }
 
     Graph<String> myGraph = null;
+    Map<String, String> supportMap = new HashMap<>();
+
 
     private static void testGraph(final Graph<String> graph) {
         graph.addNode("a");
@@ -73,21 +78,17 @@ public final class UseGraph implements Graph{
     }
 
     @Override
-    public void addNode(Object node) {
+    public void addNode(String node) {
         if (node == null || myGraph.nodeSet().contains(node)) {
             return;
         } else {
-            myGraph.nodeSet().add((String) node);
+            myGraph.nodeSet().add(node);
         }
     }
 
     @Override
-    public void addEdge(Object source, Object target) {
-        if (target == null || source == null) {
-            return;
-        } else {
-            
-        }
+    public void addEdge(String source, String target) {
+        this.supportMap.put(source, target);
     }
 
     @Override
@@ -96,13 +97,18 @@ public final class UseGraph implements Graph{
     }
 
     @Override
-    public Set<String> linkedNodes(Object node) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'linkedNodes'");
+    public Set<String> linkedNodes(String node) {
+        Set<String> supportSet = new HashSet<>();
+        for (String elem : supportMap.values()) {
+            if (elem == node) {
+                supportSet.add(elem);
+            }
+        }
+        return supportSet;
     }
 
     @Override
-    public List<String> getPath(Object source, Object target) {
+    public List<String> getPath(String source, String target) {
         return null;
     }
 }
