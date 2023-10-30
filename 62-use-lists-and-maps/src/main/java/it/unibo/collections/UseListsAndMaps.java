@@ -1,7 +1,11 @@
 package it.unibo.collections;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 /**
  * Example class using {@link List} and {@link Map}.
@@ -17,8 +21,26 @@ public final class UseListsAndMaps {
      *            unused
      */
     public static void main(final String... s) {
-        /*
-         * 1) Create a new ArrayList<Integer>, and populate it with the numbers
+
+        List<Integer> myList = new ArrayList<>();
+        
+        int NUMBER = 2000;
+
+        for (int i = 1001; i < NUMBER; i++) {
+            myList.add(i);
+        }
+        
+        List<Integer> myLinkedList = new LinkedList<Integer>(myList);
+/*
+        int j = myList.size();
+        int temp;
+        for (Integer elem : myList) {
+            if () {
+
+            }
+        }
+*/
+        /* * 1) Create a new ArrayList<Integer>, and populate it with the numbers
          * from 1000 (included) to 2000 (excluded).
          */
         /*
