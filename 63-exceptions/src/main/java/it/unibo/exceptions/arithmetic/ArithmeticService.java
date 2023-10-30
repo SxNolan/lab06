@@ -107,9 +107,7 @@ public final class ArithmeticService {
         final var rightOperand = commandQueue.remove(operatorIndex + 1);
         final var leftOperand = commandQueue.remove(operatorIndex - 1);
         if (KEYWORDS.contains(rightOperand) || KEYWORDS.contains(leftOperand)) {
-            System.out.println(
-                "Expected a number, but got " + leftOperand + " and " + rightOperand + " in " + commandQueue
-            );
+            throw new IllegalStateException("ti sei sbagliato! ");
         }
         final var right = parseDouble(rightOperand);
         final var left = parseDouble(leftOperand);
