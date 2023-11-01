@@ -28,7 +28,7 @@ public final class UseListsAndMaps {
         final int NUMBER = 2000;
         final int CENTOTHDS = 100000;
 
-        for (int i = 0; i < NUMBER; i++) {
+        for (int i = 1000; i < NUMBER; i++) {
             myList.add(i);
         }
         
@@ -47,7 +47,7 @@ public final class UseListsAndMaps {
         }
 
         long time = System.nanoTime();
-        for (int i = 0; i < CENTOTHDS; i++) {
+        for (int i = 1000; i < CENTOTHDS; i++) {
 
             myList.add(0, i);
             
