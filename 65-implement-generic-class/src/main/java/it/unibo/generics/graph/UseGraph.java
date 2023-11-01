@@ -2,6 +2,7 @@ package it.unibo.generics.graph;
 
 import it.unibo.generics.graph.api.Graph;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,8 +30,8 @@ public final class UseGraph implements Graph<String>{
         testGraph(null);
     }
 
-    Graph<String> myGraph = null;
-    Map<String, String> supportMap = new HashMap<>();
+    private Graph<String> myGraph; //My String graph.
+    private Map<String, ArrayList<String>> supportMap = new HashMap<>();
 
 
     private static void testGraph(final Graph<String> graph) {
@@ -79,36 +80,35 @@ public final class UseGraph implements Graph<String>{
 
     @Override
     public void addNode(String node) {
-        if (node == null || myGraph.nodeSet().contains(node)) {
-            return;
-        } else {
-            myGraph.nodeSet().add(node);
-        }
+        supportMap.put(node, null);
     }
 
     @Override
     public void addEdge(String source, String target) {
-        this.supportMap.put(source, target);
+        if (source == null || target == null) {
+            return;
+        } else {
+            ArrayList<String> tempList = supportMap.get(source);
+            tempList.add(target);
+            supportMap.put(source, tempList);
+        }
     }
 
     @Override
     public Set<String> nodeSet() {
-        return this.myGraph.nodeSet();
+        return supportMap.keySet();
     }
 
     @Override
     public Set<String> linkedNodes(String node) {
-        Set<String> supportSet = new HashSet<>();
-        for (String elem : supportMap.values()) {
-            if (elem == node) {
-                supportSet.add(elem);
-            }
-        }
-        return supportSet;
+        return (Set<String>) supportMap.get(node);
     }
 
     @Override
     public List<String> getPath(String source, String target) {
-        return null;
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPath'");
     }
+
+    
 }
