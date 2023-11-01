@@ -33,7 +33,7 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
             this.failProbability = failProbability;
             randomGenerator = new Random(randomSeed);
         } else {
-            throw new IllegalArgumentException("La probabilità è compresa 0 incluso a 1 escluso.");
+            throw new IllegalArgumentException("La probabilità è compresa  tra 0 incluso a 1 escluso.");
         }
         
     }
@@ -59,7 +59,7 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
         if (KEYWORDS.contains(data) || exceptionWhenParsedAsNumber == null) {
             commandQueue.add(data);
         } else {
-            throw new IOException(data + " is not a valid keyword (allowed: " + KEYWORDS + "), nor is a number");
+            throw new IllegalArgumentException(data + " is not a valid keyword (allowed: " + KEYWORDS + "), nor is a number");
             /*
              * This method, in this point, should throw an IllegalStateException.
              * Its cause, however, is the previous NumberFormatException.
