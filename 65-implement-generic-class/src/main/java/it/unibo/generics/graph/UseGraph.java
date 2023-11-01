@@ -5,7 +5,7 @@ import it.unibo.generics.graph.api.Graph;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -104,11 +104,21 @@ public final class UseGraph implements Graph<String>{
         return (Set<String>) supportMap.get(node);
     }
 
+    
     @Override
     public List<String> getPath(String source, String target) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPath'");
+        List<String> myList = new ArrayList<>();
+        myList.add(target);
+        ArrayList<String> tempList = supportMap.get(target);
+        if (myList.contains(source)) {
+            myList.add(source);
+        }
+        return null;
+
+        /*Still todo: confrontati con i compagni.*/
+
     }
+    
 
     
 }
