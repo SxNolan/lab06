@@ -6,6 +6,7 @@ package it.unibo.collections.social.impl;
 import it.unibo.collections.social.api.SocialNetworkUser;
 import it.unibo.collections.social.api.User;
 
+import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.Collection;
 //import java.util.Collections;
@@ -28,7 +29,8 @@ import java.util.Map;
 public final class SocialNetworkUserImpl<U extends User> extends UserImpl implements SocialNetworkUser<U> {
 
 
-    Map<String, U> group = new HashMap<>();
+    Map<String, ArrayList<U>> group = new HashMap<>();
+
     /*
      *
      * [FIELDS]
@@ -80,12 +82,16 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        if (group.containsValue(user)) {
-            return false;
-        } else {
-            group.put(circle, user);
-            return true;
+        if (group.containsKey(circle)) {
+            ArrayList<U> tempList = group.get(circle);
+            if (tempList.contains(user)) {
+                return false;
+            } else {
+                tempList.add(user);
+            return false; 
+            }
         }
+        return false;
     }
 
     /**
@@ -95,7 +101,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return group.values();
+        return group.get(groupName);
     }
 
     @Override
