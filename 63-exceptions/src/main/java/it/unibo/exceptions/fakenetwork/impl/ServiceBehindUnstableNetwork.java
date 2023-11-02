@@ -33,7 +33,7 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
             this.failProbability = failProbability;
             randomGenerator = new Random(randomSeed);
         } else {
-            throw new IllegalArgumentException("La probabilità è compresa  tra 0 incluso a 1 escluso.");
+            throw new IllegalArgumentException("Probability must be included within 0 included and 1 excluded.");
         }
         
     }
