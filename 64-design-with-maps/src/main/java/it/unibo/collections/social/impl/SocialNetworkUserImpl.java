@@ -9,6 +9,7 @@ import it.unibo.collections.social.api.User;
 import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 //import java.util.Collections;
 import java.util.HashMap;
 //import java.util.HashSet;
@@ -29,7 +30,7 @@ import java.util.Map;
 public final class SocialNetworkUserImpl<U extends User> extends UserImpl implements SocialNetworkUser<User> {
 
 
-    Map<String, ArrayList<User>> group;
+    private final Map<String, ArrayList<User>> group;
 
     /*
      *
@@ -83,13 +84,11 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
     @Override
     public boolean addFollowedUser(final String circle, final User user) {
         ArrayList<User> tempList = this.group.get(circle);
-        if (tempList.contains(user)) {
-            return false;
-        } else {
-            tempList.add(user);
+        if (tempList == null) {
+            tempList = new ArrayList<>();
             this.group.put(circle, tempList);
-            return true;
         }
+        return tempList.add(user);
     }
 
     /**
@@ -99,15 +98,19 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<User> getFollowedUsersInGroup(final String groupName) {
-        return group.get(groupName);
+        final Collection<User> usersCircle = this.group.get(groupName);
+        if (usersCircle != null) {
+            return new ArrayList<>(usersCircle);
+        }
+        return Collections.emptyList();
     }
 
     @Override
     public List<User> getFollowedUsers() {
-        List<User> tempList = new ArrayList<>();
-        for (String elem : group.keySet()) {
-            tempList.addAll(this.group.get(elem));
+        final List<User> tempList = new ArrayList<>();
+        for (final ArrayList<User> elem : group.values()) {
+            tempList.addAll(elem);
         }
-    return tempList;    
+    return new ArrayList<>(tempList);    
     }
 }
