@@ -1,5 +1,6 @@
 package it.unibo.generics.graph.impl;
 
+import java.util.ArrayList;
 //import java.util.Collections;
 //import java.util.Deque;
 import java.util.HashMap;
@@ -47,6 +48,32 @@ public class GraphImpl implements Graph<String>{
 
     @Override
     public List<String> getPath(String source, String target) {
-        return null;
+        Set<String> nodeVisited = new HashSet<>();
+        List<String> path = new ArrayList<>();
+        dfs_path(source, target, nodeVisited, path);
+        return path;
     }
+
+    private boolean dfs_path(String a, String dest, Set<String> visited, List<String> path) {
+        visited.add(a);
+        path.add(a);
+
+        if (a == dest) {
+            return true;
+        }
+
+        if (myMap.containsKey(a)) {
+            for (String elem : myMap.get(a)) {
+                if (!visited.contains(elem)) {
+                    if (dfs_path(elem, dest, visited, path)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        path.remove(path.size() - 1);
+        return false;
+    }
+
 }
