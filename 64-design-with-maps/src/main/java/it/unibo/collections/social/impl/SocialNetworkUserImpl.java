@@ -26,10 +26,10 @@ import java.util.Map;
  * @param <U>
  *            Specific {@link User} type
  */
-public final class SocialNetworkUserImpl<U extends User> extends UserImpl implements SocialNetworkUser<U> {
+public final class SocialNetworkUserImpl<U extends User> extends UserImpl implements SocialNetworkUser<User> {
 
 
-    Map<String, ArrayList<U>> group = new HashMap<>();
+    Map<String, ArrayList<User>> group;
 
     /*
      *
@@ -67,12 +67,12 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
-        this.group = null;
+        this.group = new HashMap<>();
     }
 
     public SocialNetworkUserImpl(final String name, final String surname, final String user) {
         super(name, surname, user, -1);
-        this.group = null;
+        this.group = new HashMap<>();
     }
 
     /*
@@ -81,17 +81,15 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      * Implements the methods below
      */
     @Override
-    public boolean addFollowedUser(final String circle, final U user) {
-        if (group.containsKey(circle)) {
-            ArrayList<U> tempList = group.get(circle);
-            if (tempList.contains(user)) {
-                return false;
-            } else {
-                tempList.add(user);
-            return false; 
-            }
+    public boolean addFollowedUser(final String circle, final User user) {
+        ArrayList<User> tempList = this.group.get(circle);
+        if (tempList.contains(user)) {
+            return false;
+        } else {
+            tempList.add(user);
+            this.group.put(circle, tempList);
+            return true;
         }
-        return false;
     }
 
     /**
@@ -100,12 +98,16 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      * return an empty Collection.
      */
     @Override
-    public Collection<U> getFollowedUsersInGroup(final String groupName) {
+    public Collection<User> getFollowedUsersInGroup(final String groupName) {
         return group.get(groupName);
     }
 
     @Override
-    public List<U> getFollowedUsers() {
-        return null;
+    public List<User> getFollowedUsers() {
+        List<User> tempList = new ArrayList<>();
+        for (String elem : group.keySet()) {
+            tempList.addAll(this.group.get(elem));
+        }
+    return tempList;    
     }
 }
