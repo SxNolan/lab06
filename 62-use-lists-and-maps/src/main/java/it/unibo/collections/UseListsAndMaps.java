@@ -47,11 +47,10 @@ public final class UseListsAndMaps {
         }
 
         long time = System.nanoTime();
-        for (int i = 1000; i < CENTOTHDS; i++) {
+        for (int i = 0; i < CENTOTHDS; i++) {
 
             myList.add(0, i);
             
-            myLinkedList.add(0, i);
         }
 
         time = System.nanoTime() - time;
@@ -65,6 +64,12 @@ public final class UseListsAndMaps {
                 + millis
                 + "ms)"
         );
+
+        for (int i = 0; i < CENTOTHDS; i++) {
+
+            myLinkedList.add(0, i);
+            
+        }
 
         System.out.println(// NOPMD
             "Converting "
